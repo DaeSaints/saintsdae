@@ -54,15 +54,20 @@ const DraggableBall = () => {
             this.vel.y = 0;
             this.pos.y = g - gravity.y;
           }
-          if (playerRef.current) {
-            playerRef.current.playVideo(); // Play the video when hitting the ground
-          }
+          // if (playerRef.current && playerRef.current.getPlayerState() === window.YT.PlayerState.PLAYING) {
+          //   playerRef.current.pauseVideo(); // Pause the video when hitting the ground
+          // }
         }
 
         // Check for collision with top, left, and right boundaries
         if (this.pos.y <= 0 || this.pos.x <= 0 || this.pos.x + this.size.w >= canvas.width) {
           if (playerRef.current) {
-            playerRef.current.playVideo(); // Play the video when hitting the edges
+            const playerState = playerRef.current.getPlayerState();
+            if (playerState === window.YT.PlayerState.PAUSED || playerState === window.YT.PlayerState.ENDED) {
+              playerRef.current.playVideo(); // Play the video when hitting the edges
+            } else {
+              playerRef.current.pauseVideo(); // Pause the video when hitting the edges
+            }
           }
           if (this.pos.y <= 0) { // Top boundary
             this.vel.y = Math.abs(this.vel.y) * bounce;
