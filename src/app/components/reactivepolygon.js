@@ -1,9 +1,16 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 
 const ReactivePolygon = ({ sides, size, color }) => {
+  const [canvasReady, setCanvasReady] = useState(false);
   const canvasRef = useRef(null);
 
   useEffect(() => {
+    setCanvasReady(true);
+  }, []);
+
+  useEffect(() => {
+    if (!canvasReady) return;
+
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
 
@@ -41,7 +48,9 @@ const ReactivePolygon = ({ sides, size, color }) => {
     return () => {
       canvas.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [sides, size, color]);
+  }, [sides, size, color, canvasReady]);
+
+  if (!canvasReady) return null;
 
   return <canvas ref={canvasRef} width={window.innerWidth} height={window.innerHeight} />;
 };
