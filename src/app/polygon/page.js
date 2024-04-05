@@ -1,11 +1,12 @@
 "use client";
 import React from 'react';
-import ReactivePolygon from '../components/reactivepolygon';
+
+import DraggableBall from '../components/draggableball';
 
 export default function Page() {
   return (
-    <div>
-      <ReactivePolygon sides={5} size={50} color="red" />
+    <div style={{ position: 'relative', width: '90vw', height: '90vh' }}>
+      <DraggableBall />
     </div>
   );
 }
