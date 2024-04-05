@@ -1,3 +1,3 @@
 export default function Page() {
-    return <h1>Jabol</h1>
+    return <h1>playground</h1>
   }
